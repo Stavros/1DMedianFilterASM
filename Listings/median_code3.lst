@@ -1,0 +1,140 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; Bubble Sort
+    2 00000000         
+    3 00000000         ; Exported Methods
+    4 00000000         ;.global bsort
+    5 00000000         
+    6 00000000         ; Code Section
+    7 00000000                 TTL              avg32bit
+    8 00000000                 AREA             program, CODE, READONLY
+    9 00000000                 EXPORT           bsort
+   10 00000000         
+   11 00000000                 ENTRY
+   12 00000000         
+   13 00000000         bsort
+   14 00000000         ; Bubble sort an array of 32bit integers in place
+   15 00000000         ; Arguments: R0 = Array location, R1 = Array size
+   16 00000000 B57F            PUSH             {R0-R6,LR}  ; Push registers on
+                                                             to the stack
+   17 00000002         
+   18 00000002         bsort_next                           ; Check for a sorte
+                                                            d array
+   19 00000002 F04F 0200       MOV              R2,#0       ; R2 = Current Elem
+                                                            ent Number
+   20 00000006 F04F 0600       MOV              R6,#0       ; R6 = Number of sw
+                                                            aps
+   21 0000000A         
+   22 0000000A         bsort_loop                           ; Start loop
+   23 0000000A F102 0301       ADD              R3,R2,#1    ; R3 = Next Element
+                                                             Number
+   24 0000000E 428B            CMP              R3,R1       ; Check for the end
+                                                             of the array
+   25 00000010 DA0C            BGE              bsort_check ; When we reach the
+                                                             end, check for cha
+                                                            nges
+   26 00000012 F850 4022       LDR              R4,[R0,R2,LSL #2] ; R4 = Curren
+                                                            t Element Value
+   27 00000016 F850 5023       LDR              R5,[R0,R3,LSL #2] ; R5 = Next E
+                                                            lement Value
+   28 0000001A 42AC            CMP              R4,R5       ; Compare element v
+                                                            alues
+   29 0000001C BFC2 F840 
+              5022             STRGT            R5,[R0,R2,LSL #2] ; If R4 > R5,
+                                                             store current valu
+                                                            e at next
+   30 00000022 F840 4023       STRGT            R4,[R0,R3,LSL #2] ; If R4 > R5,
+                                                             Store next value a
+                                                            t current
+   31 00000026 1C76            ADDGT            R6,R6,#1    ; If R4 > R5, Incre
+                                                            ment swap counter
+   32 00000028 461A            MOV              R2,R3       ; Advance to the ne
+                                                            xt element
+   33 0000002A E7EE            B                bsort_loop  ; End loop
+   34 0000002C         
+   35 0000002C         bsort_check                          ; Check for changes
+                                                            
+   36 0000002C 2E00            CMP              R6,#0       ; Were there change
+                                                            s this iteration?
+   37 0000002E BFC8 1E49       SUBGT            R1,R1,#1    ; Optimization: ski
+                                                            p last value in nex
+                                                            t loop
+
+
+
+ARM Macro Assembler    Page 2 avg32bit
+
+
+   38 00000032 DCE6            BGT              bsort_next  ; If there were cha
+                                                            nges, do it again
+   39 00000034         
+   40 00000034         bsort_done                           ; Return
+   41 00000034 BD7F            POP              {R0-R6,PC}  ; Pop the registers
+                                                             off of the stack
+   42 00000036                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
+ork --depend=.\objects\median_code3.d -o.\objects\median_code3.o -I.\RTE\_Targe
+t_1 -IC:\Users\Stavros\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Inclu
+de -IC:\Users\Stavros\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\Device\ARM\ARMCM3
+\Include --predefine="__UVISION_VERSION SETA 529" --predefine="_RTE_ SETA 1" --
+predefine="ARMCM3 SETA 1" --list=.\listings\median_code3.lst median_code3.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+bsort 00000000
+
+Symbol: bsort
+   Definitions
+      At line 13 in file median_code3.s
+   Uses
+      At line 9 in file median_code3.s
+Comment: bsort used once
+bsort_check 0000002C
+
+Symbol: bsort_check
+   Definitions
+      At line 35 in file median_code3.s
+   Uses
+      At line 25 in file median_code3.s
+Comment: bsort_check used once
+bsort_done 00000034
+
+Symbol: bsort_done
+   Definitions
+      At line 40 in file median_code3.s
+   Uses
+      None
+Comment: bsort_done unused
+bsort_loop 0000000A
+
+Symbol: bsort_loop
+   Definitions
+      At line 22 in file median_code3.s
+   Uses
+      At line 33 in file median_code3.s
+Comment: bsort_loop used once
+bsort_next 00000002
+
+Symbol: bsort_next
+   Definitions
+      At line 18 in file median_code3.s
+   Uses
+      At line 38 in file median_code3.s
+Comment: bsort_next used once
+program 00000000
+
+Symbol: program
+   Definitions
+      At line 8 in file median_code3.s
+   Uses
+      None
+Comment: program unused
+6 symbols
+339 symbols in table

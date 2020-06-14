@@ -1,0 +1,5 @@
+--cpu Cortex-M3
+--strict --scatter "median_filter.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\median_filter.map" -o .\Objects\median_filter.axf
